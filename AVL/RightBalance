@@ -1,0 +1,43 @@
+void RightBalance(BiTree&T)
+{
+    BiTree R,rl;    //调用此函数时，以T为根的树，右边高于左边，则T->bf=RH。
+    R=T->rchild;     //R是T的右孩子
+    switch (R->bf)
+    {
+    case RH:            //如果 T的右孩子和T他们的平衡因子符号相同时，则直接左旋，这是总结中的第2项
+        T->bf=R->bf=EH;  
+        L_Rotate(T);
+        break;
+    case EH:
+        T->bf=RH;
+        R->bf=LH;
+        L_Rotate(T);
+        break;
+    case LH:         //如果T的右孩子和T他们的平衡因子符合不同时，需要先以T的右孩子为根进行右旋，再以T为根左旋。
+                          //rl为T的右孩子的左孩子
+        rl=R->lchild;    //2次旋转后，T的右孩子的左孩子为新的根 。注意：rl的右子树挂接到R的左子树上，rl的左子树挂接到T的右子树上
+        switch (rl->bf)   //这个switch 是操作T和T的右孩子进行旋转后的平衡因子。
+        {
+        case EH:
+            T->bf=R->bf=EH;    //这些平衡因子操作，大家可以自己画图操作理解 下面的注解
+            break;
+                           ////2次旋转后，T的右孩子的左孩子为新的根 。
+                          //并且rl的右子树挂接到R的左子树上，rl的左子树挂接到T的右子树上，rl为新根
+        case RH:
+             R->bf=EH;
+             T->bf=LH;
+            break;
+ 
+        case LH:
+             R->bf=RH;
+             T->bf=EH;
+            break;
+        default:
+            break;
+        }
+        rl->bf=EH;    
+        R_Rotate(T->rchild);    //先左旋，以T->rchild为根左旋。
+        L_Rotate(T);  //右旋，以T为根, 左旋后 T是和rl想等，rl是新根
+        break;
+    }
+}

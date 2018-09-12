@@ -1,3 +1,5 @@
+#define EH 0,#define LH 1,#define RH -1.依次为等高，左高，右高。
+
 typedef struct _BitNode
 {
     int data;

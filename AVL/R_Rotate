@@ -1,0 +1,8 @@
+void R_Rotate(BiTree&T)
+{
+    BiTree p;             //
+    p=T->lchild;    //假如此时T指向4，则p指向3；
+    T->lchild=p->rchild; //把3的右子树挂接到4的左子树上（此例子3右子树为空）
+    p->rchild=T;       //让3的右孩子指向4.
+    T=p;        //根指向节点3
+}

@@ -10,7 +10,7 @@ bool DeleElement(BiTree&T,int key)
          if(T->data==key)
          {
             BitNode*s,*p;
-            if(T->rchild==NULL)   //只有右子树，情况2
+            if(T->rchild==NULL)   //只有左子树，情况2
             {   
                  s=T;
                  T=T->lchild;
@@ -18,7 +18,7 @@ bool DeleElement(BiTree&T,int key)
             }
             else if(T->lchild==NULL)
             {
-                s=T;               //只有左子树，情况1
+                s=T;               //只有右子树，情况1
                 T=T->rchild;
                 free(s);
             }

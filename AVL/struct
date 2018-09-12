@@ -1,0 +1,6 @@
+typedef struct _BitNode
+{
+    int data;
+    int bf;//平衡因子
+    struct _BitNode *lchild,*rchild;
+}BitNode,*BiTree;

@@ -1,0 +1,34 @@
+BST的增添元素算法实现
+
+有了搜索这个功能，那我们的增添元素的功能就很容易实现了，
+算法描述：
+1.先搜所以下所增添的key，在不在此树里面。
+2.如果没有找到，则申请空间，把key加入里面返回true，否则返回false。
+
+bool InsetBST(BiTree &T,int k)
+ {
+     BitNode* p;
+     if(!SearchBST(T,k,NULL,p))
+     {   BitNode * temp=new BitNode;
+         temp->data=k;
+         temp->lchild=temp->rchild=NULL;
+         if(!p)  //只有树为空时，此时的p才为NULL。看到这里应该明白SearchBST(T,k,pre,p)这些参数的意义了吧
+         {
+           T=temp; 
+         }
+         else
+         {
+             if(k<p->data)  //如果不为空树，加入的key值就和p相比较，小于就是他的左孩子，否子为右孩子
+                 p->lchild=temp;
+             else
+             {
+                 p->rchild=temp;
+             }
+         }
+         return 0;
+     }
+     else 
+     {
+         return false;
+     }
+ }

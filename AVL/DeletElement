@@ -1,0 +1,89 @@
+bool DeletElement(BiTree&T,int key,bool&lower)//参数（0）树根，（1）删除的元素，（3）此树是否降低标志位
+{
+    bool L,R;//删除的是左子树还是右子树，作为标志。
+    L=R=false;
+       if(T==NULL)        // 判断树根是否为空                      
+        return false;
+    if(key==T->data)//找到了所要删除的节点
+    {
+        BitNode* p,*s;
+        p=T->rchild;
+        s=p;
+        lower=true;    //找到了必定删除，lower为真
+        if(T->rchild==NULL)  // 如果所要删除的节点的右孩子为空
+        {   
+
+            p=T;
+            T=T->lchild;         //直接删除比如删除上图的 4,9,10，
+            free(p);
+
+             lower=true;
+
+            return true;
+        }
+        else
+        {
+            while (s)//如果所要删除的T节点右子树不为空，就找T的后继，也就是T的右孩子左子树的最左叶节点
+            {
+                p=s;
+                s=s->lchild;
+            }
+            T->data=p->data;//替换T
+            DeletElement(T->rchild,p->data,lower);//删除掉T的后继
+            R=true;
+        }
+    }
+    else if(key<T->data)
+    {
+        DeletElement(T->lchild,key,lower);
+        L=true;
+    }
+    else 
+    {
+        DeletElement(T->rchild,key,lower);
+        R=true;
+    }
+    if(lower)//如果有节点删除
+    {
+        if(L)//删除的是左节点
+        {
+            switch (T->bf)
+            {
+            case LH://没删之前LH，删后T->bf=EH;
+                T->bf=EH;
+                lower=true;
+                break;
+            case RH://没删之前RH，删后导致右不平衡，
+                RightBalance(T);
+                lower=false;
+                break;
+            case EH://没删之前EH，删后RH；
+                T->bf=RH;
+                lower=false;
+                break;
+            default:
+                break;
+            }
+        }
+        else
+        {
+            switch (T->bf)
+            {
+            case EH:
+                T->bf=LH;
+                lower=false;
+                break;
+            case RH:
+                T->bf=EH;
+                lower=true;
+                break;
+            case LH:
+                LeftBalance(T);
+                lower=false;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}     

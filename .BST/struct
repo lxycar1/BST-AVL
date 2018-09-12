@@ -1,0 +1,7 @@
+结构
+
+typedef struct _BitNode
+{
+    int data;
+    struct _BitNode *lchild,*rchild;
+}BitNode,*BiTree;

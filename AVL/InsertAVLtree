@@ -1,0 +1,70 @@
+bool InsertAVLtree(BiTree&T,int key,bool&taller)
+{
+    if(!T)       //此树为空
+    {
+        T=new BitNode;   //直接作为整棵树的根。
+        T->bf=EH;
+        T->lchild=T->rchild=NULL;
+        T->data=key;
+        taller=true;
+        return true;
+    }
+    else
+    {   if(key==T->data)      //已有元素，不用插入了，返回false；
+          {
+              taller=false;
+              return false;
+           }
+        if(key<T->data)      //所插元素小于此根的值，就找他的左孩子去比
+        {
+            if(!InsertAVLtree(T->lchild,key,taller))   //所插元素小于此根的值，就找他的左孩子去比 
+                return false;
+            if(taller)    //taller为根，则树长高了，并且插入到了此根的左子树上。
+            {
+            switch (T->bf)       //此根的平衡因子
+            {
+            case EH:             //原先是左右平衡，等高
+                T->bf=LH;          //由于插入到左子树上，导致左高=》》LH
+                taller=true;      //继续往上递归
+                break;
+            case LH:
+                LeftBalance(T); //原先LH，由于插入到了左边，这T这个树，不平衡需要左平衡
+                taller=false;  //以平衡，设taller为false，往上递归就不用进入此语句了，
+                break;
+            case RH:
+                T->bf=EH;     //原先RH，由于插入到左边，导致此T平衡
+                taller=false;
+                break;
+            default:
+                break;
+            }
+            }
+        }
+        else 
+        {
+                if(!InsertAVLtree(T->rchild,key,taller))
+                    return false;
+                if(taller)
+                {
+                switch (T->bf)
+                {
+                case EH:
+                    T->bf=RH;
+                    taller=true;
+                    break;
+                case LH:
+                    T->bf=EH;
+                    taller=false;
+                    break;
+                case RH:
+                    RightBalance(T);
+                    taller=false;
+                    break;
+                default:
+                    break;
+                }
+                }
+        }
+       
+         
+    }

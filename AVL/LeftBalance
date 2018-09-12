@@ -1,0 +1,41 @@
+
+void LeftBalance(BiTree&T)
+{
+    BiTree L,lr;
+    L=T->lchild;
+    switch (L->bf)
+{
+    case EH:
+        L->bf=RH;
+        T->bf=LH;
+        R_Rotate(T);
+        break;
+    case LH:
+        L->bf=T->bf=EH;
+        R_Rotate(T);
+        break;
+    case RH:
+        lr=L->rchild;
+        switch (lr->bf)
+        {
+        case EH:
+            L->bf=L->bf=EH;
+        case RH:
+            T->bf=EH;
+            L->bf=LH;
+            break;
+        case LH:
+            L->bf=EH;
+            T->bf=RH;
+            break;
+        default:
+            break;
+        }
+        lr->bf=EH;
+        L_Rotate(T->lchild);
+        R_Rotate(T);
+        break;
+    default:
+        break;
+    }
+}

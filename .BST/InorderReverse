@@ -1,0 +1,10 @@
+//中序遍历并输出元素
+ void InorderReverse(BiTree T)
+ {
+     if(T)
+     {
+         InorderReverse(T->lchild);
+         cout<<T->data<<endl;
+         InorderReverse(T->rchild);
+     }
+ }

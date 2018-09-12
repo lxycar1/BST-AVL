@@ -1,0 +1,8 @@
+void L_Rotate(BiTree&T)
+{
+    BiTree p;
+    p=T->rchild;     //假如此时T指向4，则p指向7.
+    T->rchild=p->lchild;  //让7的左子树挂接到4的右子树上
+    p->lchild=T;    //让7的左孩子指向4
+    T=p;   //树根指向7
+}

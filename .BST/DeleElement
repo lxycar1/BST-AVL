@@ -1,0 +1,50 @@
+删除总共有3种情况，1只有左子树；2，只有右子树；3，左右子树都有。
+
+bool DeleElement(BiTree&T,int key)
+ {
+    
+         if(!T)
+          {
+              return 0;   //树是空树的话就返回假
+          }
+         if(T->data==key)
+         {
+            BitNode*s,*p;
+            if(T->rchild==NULL)   //只有右子树，情况2
+            {   
+                 s=T;
+                 T=T->lchild;
+                 free(s);
+            }
+            else if(T->lchild==NULL)
+            {
+                s=T;               //只有左子树，情况1
+                T=T->rchild;
+                free(s);
+            }
+            else
+            {                      //情况3，左右子树都有
+                p=T;
+                s=T->rchild;
+                while (s->lchild)
+                {
+                    p=s;           //找到所要删除节点的后继，那就是他的右孩子的
+                    s=s->lchild;
+                }
+                T->data=s->data;    //用删除节点的后继替换所删除的节点
+                if(p!=T)           
+                {
+                    p->lchild=NULL;   //所删除的节点的右孩子不是叶结点
+                }
+                else 
+                    p->rchild=NULL;   //所删除的节点的右孩子是叶节点
+                free(s);
+            }
+             return 1;
+         }
+         else if(key<T->data)
+            DeleElement(T->lchild,key);    //去和他的左子树根去比较
+         else 
+            DeleElement(T->rchild,key);   //去和他的右子树根去比较
+
+ }

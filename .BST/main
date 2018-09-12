@@ -1,0 +1,12 @@
+int main()
+{
+    BiTree tree=NULL;
+    int a[]={60,86,50,40,35,74,51,100,37,90};
+    for(int i=0;i<10;i++)
+        InsetBST(tree,a[i]);
+    InorderReverse(tree);
+    cout<<"             "<<endl<<endl;
+    DeleElement(tree,62);
+    InorderReverse(tree);
+    return 0;
+}
